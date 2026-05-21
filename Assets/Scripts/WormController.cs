@@ -41,6 +41,10 @@ public class WormController : MonoBehaviour
     private bool jumpHeld = false;
     private bool jumpReleased = false;
 
+    [Header("Camera")]
+    [SerializeField] public Camera mainCamera;
+    public float rotationSpeed;
+
     void Awake()
     {
         inputActions = new InputSystem_Actions();
@@ -83,6 +87,7 @@ public class WormController : MonoBehaviour
         CheckGround();
         HandleCoilJump();
         HandleDashTimer();
+        FaceCamera();
     }
 
     void FixedUpdate()
@@ -90,21 +95,19 @@ public class WormController : MonoBehaviour
         HandleMovement();
         ApplyGravity();
     }
-void HandleMovement()
-{
-    // Don't override velocity during dash
-    if (isDashing) return;
+    void HandleMovement()
+    {
+        // Don't override velocity during dash
+        if (isDashing) return;
 
-    transform.Rotate(0f, moveInput.x * 150f * Time.fixedDeltaTime, 0f);
+        Vector3 moveDirection = transform.forward * moveInput.y + (transform.right * moveInput.x);
+        Vector3 targetVelocity = moveDirection * moveSpeed;
 
-    Vector3 moveDirection = transform.forward * moveInput.y;
-    Vector3 targetVelocity = moveDirection * moveSpeed;
+        float rate = moveInput.magnitude > 0 ? acceleration : deceleration;
+        currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, rate * Time.fixedDeltaTime);
 
-    float rate = moveInput.magnitude > 0 ? acceleration : deceleration;
-    currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, rate * Time.fixedDeltaTime);
-
-    rb.linearVelocity = new Vector3(currentVelocity.x, rb.linearVelocity.y, currentVelocity.z);
-}
+        rb.linearVelocity = new Vector3(currentVelocity.x, rb.linearVelocity.y, currentVelocity.z);
+    }
 
     void HandleCoilJump()
     {
@@ -190,6 +193,22 @@ void HandleMovement()
         {
             hasDash = true;
             Debug.Log("Dash unlocked!");
+        }
+    }
+
+    void FaceCamera()
+    {
+        Vector3 cameraForward = mainCamera.transform.forward;
+        cameraForward.y = 0;
+
+        if (cameraForward != Vector3.zero)
+        {
+            // The following code was assisted by Google Gemini
+            // Create the target rotation based on the camera's direction
+            Quaternion targetRotation = Quaternion.LookRotation(cameraForward);
+
+            // Smoothly rotate towards that target
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
         }
     }
 }

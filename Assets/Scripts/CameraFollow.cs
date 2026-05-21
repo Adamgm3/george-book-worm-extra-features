@@ -27,12 +27,15 @@ public class CameraFollow : MonoBehaviour
     {
         if (target == null) return;
 
-        // Camera yaw follows worm's facing direction + mouse offset
-        float targetYaw = target.eulerAngles.y + yaw;
-        Quaternion rotation = Quaternion.Euler(pitch, targetYaw, 0f);
+        // Remove "target.eulerAngles.y" to break the loop
+        // Now the camera rotates purely based on mouse input
+        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
+
         Vector3 desiredPosition = target.position + rotation * new Vector3(0f, 0f, -distance);
 
+        // Using SmoothDamp or a high smoothSpeed keeps it responsive
         transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
         transform.LookAt(target.position + Vector3.up * 0.5f);
     }
+
 }
