@@ -795,10 +795,10 @@ MonoBehaviour:
   moveSpeed: 5
   acceleration: 10
   deceleration: 8
-  minJumpForce: 3
-  maxJumpForce: 10
-  maxCoilTime: 1
-  gravityScale: 2.5
+  minJumpForce: 2.5
+  maxJumpForce: 4.5
+  jumpHoldTime: 0.3
+  gravityScale: 4.5
   groundCheckDistance: 0.3
   groundLayer:
     serializedVersion: 2
