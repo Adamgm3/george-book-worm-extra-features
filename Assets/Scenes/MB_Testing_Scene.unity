@@ -792,7 +792,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00889ceff0db6964cb0e422a67e5aea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WormController
-  moveSpeed: 5
+  moveSpeed: 3
   acceleration: 10
   deceleration: 8
   minJumpForce: 3
@@ -1164,7 +1164,7 @@ MonoBehaviour:
   target: {fileID: 799866765}
   distance: 8
   smoothSpeed: 8
-  mouseSensitivity: 3
+  mouseSensitivity: 0.2
   minPitch: 10
   maxPitch: 70
 --- !u!114 &1120938216
