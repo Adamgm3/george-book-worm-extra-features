@@ -16,28 +16,22 @@ public class PlayerWeapon : MonoBehaviour
 
     private void Update()
     {
-        if (m_attackAction.IsPressed())
-        {
-            attackPressed = true;
-        }
-        else
-        {
-            attackPressed = false;
-        }
+        attackPressed = m_attackAction.IsPressed();
     }
-    public void OnTriggerEnter(Collider other)
+
+    private void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy") && attackPressed)
         {
-            
-            if (attackPressed == true)
+            EnemyMovement enemy = other.GetComponent<EnemyMovement>();
+
+            if (enemy != null)
             {
                 enemy.health -= damage;
-                Debug.Log("Enemy hit! Remaining Enemy health: " + enemy.health);
+
+                Debug.Log("Enemy hit! Remaining health: " + enemy.health);
             }
-
         }
-
     }
 
 }
