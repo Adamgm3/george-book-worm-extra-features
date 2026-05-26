@@ -90,21 +90,25 @@ public class WormController : MonoBehaviour
         HandleMovement();
         ApplyGravity();
     }
-void HandleMovement()
-{
-    // Don't override velocity during dash
-    if (isDashing) return;
+    void HandleMovement()
+    {
+        if (isDashing) return;
 
-    transform.Rotate(0f, moveInput.x * 150f * Time.fixedDeltaTime, 0f);
+        Transform cam = Camera.main.transform;
+        Vector3 camForward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;
+        Vector3 camRight = Vector3.ProjectOnPlane(cam.right, Vector3.up).normalized;
 
-    Vector3 moveDirection = transform.forward * moveInput.y;
-    Vector3 targetVelocity = moveDirection * moveSpeed;
+        Vector3 moveDirection = (camForward * moveInput.y + camRight * moveInput.x * 0.1f).normalized;
+        Vector3 targetVelocity = moveDirection * moveSpeed;
 
-    float rate = moveInput.magnitude > 0 ? acceleration : deceleration;
-    currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, rate * Time.fixedDeltaTime);
+        float rate = moveInput.magnitude > 0 ? acceleration : deceleration;
+        currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, rate * Time.fixedDeltaTime);
 
-    rb.linearVelocity = new Vector3(currentVelocity.x, rb.linearVelocity.y, currentVelocity.z);
-}
+        // Worm always faces camera forward direction
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(camForward), 15f * Time.fixedDeltaTime);
+
+        rb.linearVelocity = new Vector3(currentVelocity.x, rb.linearVelocity.y, currentVelocity.z);
+    }
 
     void HandleCoilJump()
     {

@@ -27,17 +27,17 @@ public class PlayerMovement : MonoBehaviour
 
         // Handle gravity and jumping
         if (controller.isGrounded && velocity.y < 0)
-        {
+    {
             velocity.y = -2f; // small negative to keep grounded
-        }
+    }
 
         if (Input.GetKeyDown(KeyCode.Space) && controller.isGrounded)
-        {
+    {
 
             Jump();
-        }
+    }
         if (Input.GetKeyDown(KeyCode.LeftShift) && !isDashing)
-        {
+    {
             StartCoroutine(Dash(15f, 0.2f));
         }
 
@@ -48,7 +48,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 moveDirection = Vector3.zero;
 
         if (inputDirection.magnitude >= 0.1f)
-        {
+    {
             // Get camera directions
             Vector3 camForward = cameraTransform.forward;
             Vector3 camRight = cameraTransform.right;
@@ -95,7 +95,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public Vector3 getPosition()
-    {
+        {
         return currentPostion;
     }
 }
