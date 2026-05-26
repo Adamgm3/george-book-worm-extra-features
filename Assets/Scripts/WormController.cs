@@ -11,8 +11,10 @@ public class WormController : MonoBehaviour
     [Header("Jump")]
     public float minJumpForce = 3f;
     public float maxJumpForce = 10f;
-    public float maxCoilTime = 1f;
+    public float jumpHoldTime = 0.4f;
     public float gravityScale = 2.5f;
+    private bool isJumping = false;
+    private float jumpTimer = 0f;
 
     [Header("Ground Check")]
     public float groundCheckDistance = 0.3f;
@@ -31,7 +33,6 @@ public class WormController : MonoBehaviour
     private bool usedDash = false;
 
     private Rigidbody rb;
-    private float coilTime = 0f;
     private bool isGrounded = false;
     private Vector3 currentVelocity;
 
@@ -54,15 +55,13 @@ public class WormController : MonoBehaviour
         inputActions.Player.Move.canceled += ctx => moveInput = Vector2.zero;
         inputActions.Player.Sprint.performed += ctx =>
         {
-            Debug.Log("Sprint pressed, hasDash: " + hasDash + " isGrounded: " + isGrounded + " usedDash: " + usedDash);
             HandleDash();
         };
 
-        inputActions.Player.Jump.performed += ctx => jumpHeld = true;
         inputActions.Player.Jump.canceled += ctx =>
         {
-            jumpReleased = true;
             jumpHeld = false;
+            jumpReleased = true;
         };
     }
 
@@ -80,8 +79,9 @@ public class WormController : MonoBehaviour
 
     void Update()
     {
+        jumpHeld = inputActions.Player.Jump.IsPressed();
         CheckGround();
-        HandleCoilJump();
+        HandleJump();
         HandleDashTimer();
     }
 
@@ -90,50 +90,56 @@ public class WormController : MonoBehaviour
         HandleMovement();
         ApplyGravity();
     }
-void HandleMovement()
-{
-    // Don't override velocity during dash
-    if (isDashing) return;
+    void HandleMovement()
+    {
+        if (isDashing) return;
 
-    transform.Rotate(0f, moveInput.x * 150f * Time.fixedDeltaTime, 0f);
+        Transform cam = Camera.main.transform;
+        Vector3 camForward = Vector3.ProjectOnPlane(cam.forward, Vector3.up).normalized;
+        Vector3 camRight = Vector3.ProjectOnPlane(cam.right, Vector3.up).normalized;
 
-    Vector3 moveDirection = transform.forward * moveInput.y;
-    Vector3 targetVelocity = moveDirection * moveSpeed;
+        Vector3 moveDirection = (camForward * moveInput.y + camRight * moveInput.x * 0.1f).normalized;
+        Vector3 targetVelocity = moveDirection * moveSpeed;
 
-    float rate = moveInput.magnitude > 0 ? acceleration : deceleration;
-    currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, rate * Time.fixedDeltaTime);
+        float rate = moveInput.magnitude > 0 ? acceleration : deceleration;
+        currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, rate * Time.fixedDeltaTime);
 
-    rb.linearVelocity = new Vector3(currentVelocity.x, rb.linearVelocity.y, currentVelocity.z);
-}
+        // Worm always faces camera forward direction
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(camForward), 15f * Time.fixedDeltaTime);
 
-    void HandleCoilJump()
+        rb.linearVelocity = new Vector3(currentVelocity.x, rb.linearVelocity.y, currentVelocity.z);
+    }
+
+    void HandleJump()
     {
         // Reset double jump when grounded
-        if (isGrounded) usedDoubleJump = false;
-
-        // Wind up while held and grounded
-        if (jumpHeld && isGrounded)
+        if (isGrounded)
         {
-            coilTime += Time.deltaTime;
-            coilTime = Mathf.Clamp(coilTime, 0, maxCoilTime);
+            usedDoubleJump = false;
+            isJumping = false;
         }
 
-        if (jumpReleased)
+        // Initial jump on press
+        if (jumpHeld && isGrounded && !isJumping)
         {
-            if (isGrounded)
-            {
-                // Normal coil jump
-                float t = coilTime / maxCoilTime;
-                float jumpForce = Mathf.Lerp(minJumpForce, maxJumpForce, t);
-                rb.linearVelocity = new Vector3(rb.linearVelocity.x, jumpForce, rb.linearVelocity.z);
-                coilTime = 0f;
-            }
-            else if (hasDoubleJump && !usedDoubleJump)
-            {
-                // Double jump - mid air smaller jump
-                rb.linearVelocity = new Vector3(rb.linearVelocity.x, minJumpForce * 1.5f, rb.linearVelocity.z);
-                usedDoubleJump = true;
-            }
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, minJumpForce, rb.linearVelocity.z);
+            isJumping = true;
+            jumpTimer = 0f;
+        }
+
+        // Hold to go higher
+        if (jumpHeld && isJumping && jumpTimer < jumpHoldTime)
+        {
+            jumpTimer += Time.deltaTime;
+            float extraForce = Mathf.Lerp(0f, maxJumpForce - minJumpForce, jumpTimer / jumpHoldTime);
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, minJumpForce + extraForce, rb.linearVelocity.z);
+        }
+
+        // Double jump on release in air
+        if (jumpReleased && !isGrounded && hasDoubleJump && !usedDoubleJump)
+        {
+            rb.linearVelocity = new Vector3(rb.linearVelocity.x, minJumpForce * 1.5f, rb.linearVelocity.z);
+            usedDoubleJump = true;
         }
 
         jumpReleased = false;
@@ -149,7 +155,6 @@ void HandleMovement()
 
             Vector3 dashDirection = transform.forward;
             rb.linearVelocity = new Vector3(dashDirection.x * dashForce, 0f, dashDirection.z * dashForce);
-            Debug.Log("Dashing with force: " + dashForce);
         }
     }
 
@@ -182,14 +187,8 @@ void HandleMovement()
     public void UnlockAbility(AbilityType ability)
     {
         if (ability == AbilityType.DoubleJump)
-        {
             hasDoubleJump = true;
-            Debug.Log("Double jump unlocked!");
-        }
         else if (ability == AbilityType.Dash)
-        {
             hasDash = true;
-            Debug.Log("Dash unlocked!");
-        }
     }
 }
