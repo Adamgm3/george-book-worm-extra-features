@@ -6,7 +6,7 @@ public class CameraFollow : MonoBehaviour
     public Transform target;
     public float distance = 8f;
     public float smoothSpeed = 8f;
-    public float mouseSensitivity = 3f;
+    public float mouseSensitivity = 0.5f;
 
     [Header("Vertical Limits")]
     public float minPitch = 10f;
@@ -18,8 +18,12 @@ public class CameraFollow : MonoBehaviour
     void Update()
     {
         Vector2 mouseDelta = Mouse.current.delta.ReadValue();
-        yaw += mouseDelta.x * mouseSensitivity * 0.1f;
-        pitch -= mouseDelta.y * mouseSensitivity * 0.1f;
+
+        // Clamp how much the mouse can move in a single frame
+        mouseDelta = Vector2.ClampMagnitude(mouseDelta, 10f);
+
+        yaw += mouseDelta.x * mouseSensitivity;
+        pitch -= mouseDelta.y * mouseSensitivity;
         pitch = Mathf.Clamp(pitch, minPitch, maxPitch);
     }
 
@@ -27,9 +31,7 @@ public class CameraFollow : MonoBehaviour
     {
         if (target == null) return;
 
-        // Camera yaw follows worm's facing direction + mouse offset
-        float targetYaw = target.eulerAngles.y + yaw;
-        Quaternion rotation = Quaternion.Euler(pitch, targetYaw, 0f);
+        Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
         Vector3 desiredPosition = target.position + rotation * new Vector3(0f, 0f, -distance);
 
         transform.position = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed * Time.deltaTime);
