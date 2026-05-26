@@ -41,6 +41,10 @@ public class WormController : MonoBehaviour
     private bool jumpHeld = false;
     private bool jumpReleased = false;
 
+    //Animations
+    [SerializeField] Animator animator;
+    private bool isMoving;
+
     void Awake()
     {
         inputActions = new InputSystem_Actions();
@@ -190,6 +194,18 @@ void HandleMovement()
         {
             hasDash = true;
             Debug.Log("Dash unlocked!");
+        }
+    }
+
+    public void HandleAnimations()
+    {
+        if (currentVelocity.x != 0 && currentVelocity.z != 0)
+        {
+            animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            animator.SetBool("isMoving", false);
         }
     }
 }
