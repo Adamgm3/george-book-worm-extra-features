@@ -8,7 +8,7 @@ public class CollectibleUI : MonoBehaviour
     public TextMeshProUGUI collectibleText;
     public int goal = 5;
 
-    private int count = 0;
+    public int count = 0;
 
     void Awake()
     {
@@ -18,6 +18,6 @@ public class CollectibleUI : MonoBehaviour
     public void AddCollectible()
     {
         count++;
-        collectibleText.text = count + "/" + goal;
+        collectibleText.text = count + " / " + goal;
     }
 }

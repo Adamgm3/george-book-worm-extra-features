@@ -13,6 +13,8 @@ public class FlyingBook : MonoBehaviour
     private int currentWaypoint = 0;
     private Vector3 startPos;
 
+    public CollectibleUI collectibleUI;
+
     void Start()
     {
         if (waypoints.Length == 0) return;
@@ -70,7 +72,7 @@ public class FlyingBook : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            PS1CameraEffect.collectibleCount++;
+            collectibleUI.AddCollectible();
             Destroy(gameObject);
         }
     }
