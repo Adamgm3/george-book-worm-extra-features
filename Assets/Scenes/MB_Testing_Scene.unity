@@ -966,7 +966,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00889ceff0db6964cb0e422a67e5aea9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WormController
-  moveSpeed: 5
+  moveSpeed: 3
   acceleration: 10
   deceleration: 8
   minJumpForce: 3
@@ -1061,7 +1061,7 @@ GameObject:
   - component: {fileID: 1065198185}
   m_Layer: 0
   m_Name: Main Camera
-  m_TagString: MainCamera
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1200,7 +1200,7 @@ GameObject:
   - component: {fileID: 1120938216}
   m_Layer: 0
   m_Name: GameCamera
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1338,7 +1338,7 @@ MonoBehaviour:
   target: {fileID: 799866765}
   distance: 8
   smoothSpeed: 8
-  mouseSensitivity: 3
+  mouseSensitivity: 0.2
   minPitch: 10
   maxPitch: 70
 --- !u!114 &1120938216
