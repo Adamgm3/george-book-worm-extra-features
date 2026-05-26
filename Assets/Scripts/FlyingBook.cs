@@ -11,7 +11,6 @@ public class FlyingBook : MonoBehaviour
     public float bobSpeed = 2f;
 
     private int currentWaypoint = 0;
-    private int direction = 1;
     private Vector3 startPos;
 
     void Start()
@@ -71,8 +70,7 @@ public class FlyingBook : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // TODO: trigger lore popup here later
-            Debug.Log(gameObject.name + " collected!");
+            PS1CameraEffect.collectibleCount++;
             Destroy(gameObject);
         }
     }
