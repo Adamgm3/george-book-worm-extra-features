@@ -93,6 +93,7 @@ public class WormController : MonoBehaviour
     {
         HandleMovement();
         ApplyGravity();
+        HandleAnimations();
     }
 void HandleMovement()
 {
@@ -108,6 +109,15 @@ void HandleMovement()
     currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, rate * Time.fixedDeltaTime);
 
     rb.linearVelocity = new Vector3(currentVelocity.x, rb.linearVelocity.y, currentVelocity.z);
+
+    if (moveInput.magnitude != 0)
+        {
+            isMoving = true;
+        }
+    else
+        {
+            isMoving = false;
+        }
 }
 
     void HandleCoilJump()
@@ -199,7 +209,7 @@ void HandleMovement()
 
     public void HandleAnimations()
     {
-        if (currentVelocity.x != 0 && currentVelocity.z != 0)
+        if (isMoving == true)
         {
             animator.SetBool("isMoving", true);
         }
