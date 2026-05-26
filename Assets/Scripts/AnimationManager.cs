@@ -2,15 +2,42 @@ using UnityEngine;
 
 public class AnimationManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] WormController wormController;
+    [SerializeField] public Animator animator;
+
+    private void Update()
     {
-        
+        HandleAnimations();
     }
 
-    // Update is called once per frame
-    void Update()
+    public void HandleAnimations()
     {
-        
+        if (wormController.moveInput.magnitude != 0)
+        {
+            animator.SetBool("isMoving", true);
+        }
+        else
+        {
+            animator.SetBool("isMoving", false);
+        }
+
+        if (wormController.inputActions.Player.Jump.WasReleasedThisFrame())
+        {
+            animator.SetTrigger("beginJump");
+        }
+        else
+        {
+            animator.ResetTrigger("beginJump");
+        }
+
+        if (wormController.isGrounded == false)
+        {
+            animator.SetBool("notGrounded", true);
+        }
+        else
+        {
+            animator.SetBool("notGrounded", false);
+            //animator.SetBool("isJumping", false);
+        }
     }
 }

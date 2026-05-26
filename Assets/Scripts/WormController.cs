@@ -30,20 +30,20 @@ public class WormController : MonoBehaviour
     private float dashTimer = 0f;
     private bool usedDash = false;
 
+    public bool isGrounded = false;
     private Rigidbody rb;
     private float coilTime = 0f;
-    private bool isGrounded = false;
     private Vector3 currentVelocity;
 
     // Input System
-    private InputSystem_Actions inputActions;
-    private Vector2 moveInput;
+    public InputSystem_Actions inputActions;
+    public Vector2 moveInput;
     private bool jumpHeld = false;
-    private bool jumpReleased = false;
+    public bool jumpReleased = false;
 
-    //Animations
-    [SerializeField] Animator animator;
-    private bool isMoving;
+    [Header("Ground Check")]
+    public Transform feetPoint; // Drag your new 'FeetPoint' object here in the Inspector
+    public float groundCheckRadius = 0.2f; // The size of the detection bubble
 
     void Awake()
     {
@@ -93,7 +93,6 @@ public class WormController : MonoBehaviour
     {
         HandleMovement();
         ApplyGravity();
-        HandleAnimations();
     }
 void HandleMovement()
 {
@@ -109,15 +108,6 @@ void HandleMovement()
     currentVelocity = Vector3.MoveTowards(currentVelocity, targetVelocity, rate * Time.fixedDeltaTime);
 
     rb.linearVelocity = new Vector3(currentVelocity.x, rb.linearVelocity.y, currentVelocity.z);
-
-    if (moveInput.magnitude != 0)
-        {
-            isMoving = true;
-        }
-    else
-        {
-            isMoving = false;
-        }
 }
 
     void HandleCoilJump()
@@ -190,8 +180,13 @@ void HandleMovement()
 
     void CheckGround()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance + 0.1f, groundLayer);
+        if (feetPoint == null) return;
+
+        // Checks a tiny sphere bubble at the player's feet. 
+        // It doesn't use rays, so it can't get cut off by wall/floor seams!
+        isGrounded = Physics.CheckSphere(feetPoint.position, groundCheckRadius, groundLayer);
     }
+
 
     public void UnlockAbility(AbilityType ability)
     {
@@ -207,15 +202,4 @@ void HandleMovement()
         }
     }
 
-    public void HandleAnimations()
-    {
-        if (isMoving == true)
-        {
-            animator.SetBool("isMoving", true);
-        }
-        else
-        {
-            animator.SetBool("isMoving", false);
-        }
-    }
 }
