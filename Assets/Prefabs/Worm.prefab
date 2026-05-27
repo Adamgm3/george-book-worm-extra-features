@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6295204769327815673}
   m_Layer: 0
   m_Name: Feet
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -110,7 +110,7 @@ MonoBehaviour:
   deceleration: 8
   minJumpForce: 3
   maxJumpForce: 10
-  maxCoilTime: 1
+  jumpHoldTime: 0.4
   gravityScale: 2.5
   groundCheckDistance: 0.3
   groundLayer:
@@ -150,7 +150,7 @@ GameObject:
   - component: {fileID: 8690075399811758494}
   m_Layer: 0
   m_Name: Colliders
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -185,7 +185,7 @@ GameObject:
   - component: {fileID: 6343613880801811849}
   m_Layer: 0
   m_Name: Capsule1
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -240,7 +240,7 @@ GameObject:
   - component: {fileID: 914902631467213896}
   m_Layer: 0
   m_Name: Capsule2
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
