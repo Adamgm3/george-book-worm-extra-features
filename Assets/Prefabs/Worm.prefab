@@ -293,6 +293,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7109089966304685355}
   - component: {fileID: 7942720780659021298}
+  - component: {fileID: 8824270132452907782}
   m_Layer: 6
   m_Name: Hitbox
   m_TagString: Untagged
@@ -330,12 +331,27 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 127
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Radius: 0.4424181
   m_Center: {x: 0.12045119, y: 0.03436829, z: 0.04495299}
+--- !u!114 &8824270132452907782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9148707211967633546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a684e29aed70074781aa1f32e761d47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWeapon
+  enemy: {fileID: 0}
+  inputActions: {fileID: 0}
+  damage: 1
 --- !u!1001 &1982112386990302892
 PrefabInstance:
   m_ObjectHideFlags: 0
