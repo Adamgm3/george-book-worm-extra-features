@@ -1318,6 +1318,27 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4966553116875469140, guid: a04e9e35d2dab5d40a1093f799118335, type: 3}
   m_PrefabInstance: {fileID: 728364314}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &850711210 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4992328211488326826, guid: 803c534cf62abc345acdcefdfc06fc2f, type: 3}
+  m_PrefabInstance: {fileID: 869490536}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &850711213
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 850711210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a196a7cd4479b354cb14bb033cace4b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  health: 5
+  damage: 1
+  enemy: {fileID: 1076996935}
+  scene: 2
 --- !u!1001 &869490536
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1377,7 +1398,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4992328211488326826, guid: 803c534cf62abc345acdcefdfc06fc2f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 850711213}
   m_SourcePrefab: {fileID: 100100000, guid: 803c534cf62abc345acdcefdfc06fc2f, type: 3}
 --- !u!4 &869490537 stripped
 Transform:
@@ -2253,7 +2277,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67460f5e9cfca584c83198cc0a440cc9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyWeapon
-  player: {fileID: 0}
+  player: {fileID: 850711213}
   damage: 1
   attackCooldown: 1.5
 --- !u!65 &1899061252
@@ -2271,7 +2295,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
