@@ -2816,7 +2816,7 @@ MonoBehaviour:
   deceleration: 8
   minJumpForce: 3
   maxJumpForce: 10
-  maxCoilTime: 1
+  jumpHoldTime: 0.4
   gravityScale: 2.5
   groundCheckDistance: 0.3
   groundLayer:
