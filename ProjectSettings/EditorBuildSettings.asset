@@ -4,5 +4,14 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 9827f5596c34b9d42abebb910d60ab22
+  - enabled: 1
+    path: Assets/Scenes/HubWorld.unity
+    guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Book1_ThroughTheShades,AsTheSingersWeep.unity
+    guid: d3c1a40aaa87f7349a18eca86bf5da08
   m_configObjects: {}

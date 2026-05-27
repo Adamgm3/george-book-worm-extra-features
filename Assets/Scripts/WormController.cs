@@ -15,6 +15,8 @@ public class WormController : MonoBehaviour
     public float gravityScale = 2.5f;
     private bool isJumping = false;
     private float jumpTimer = 0f;
+    private bool wasGrounded = false;
+    private bool jumpPressed = false;
 
     [Header("Ground Check")]
     public float groundCheckDistance = 0.3f;
@@ -62,6 +64,7 @@ public class WormController : MonoBehaviour
             HandleDash();
         };
 
+        inputActions.Player.Jump.performed += ctx => jumpPressed = true;
         inputActions.Player.Jump.canceled += ctx =>
         {
             jumpHeld = false;
@@ -116,15 +119,17 @@ public class WormController : MonoBehaviour
 
     void HandleJump()
     {
-        // Reset double jump when grounded
-        if (isGrounded)
+        // Only reset when we've just landed (transition from air to ground)
+        if (isGrounded && !wasGrounded)
         {
             usedDoubleJump = false;
             isJumping = false;
+            jumpTimer = 0f;
         }
+        wasGrounded = isGrounded;
 
         // Initial jump on press
-        if (jumpHeld && isGrounded && !isJumping)
+        if (jumpPressed && isGrounded)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, minJumpForce, rb.linearVelocity.z);
             isJumping = true;
@@ -138,14 +143,20 @@ public class WormController : MonoBehaviour
             float extraForce = Mathf.Lerp(0f, maxJumpForce - minJumpForce, jumpTimer / jumpHoldTime);
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, minJumpForce + extraForce, rb.linearVelocity.z);
         }
+        else if (!jumpHeld && isJumping)
+        {
+            jumpTimer = jumpHoldTime;
+        }
 
-        // Double jump on release in air
-        if (jumpReleased && !isGrounded && hasDoubleJump && !usedDoubleJump)
+        // Double jump
+        if (jumpPressed && !isGrounded && isJumping && hasDoubleJump && !usedDoubleJump)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, minJumpForce * 1.5f, rb.linearVelocity.z);
             usedDoubleJump = true;
+            jumpTimer = jumpHoldTime;
         }
 
+        jumpPressed = false;
         jumpReleased = false;
     }
 
