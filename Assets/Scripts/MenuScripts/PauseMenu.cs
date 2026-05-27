@@ -50,7 +50,7 @@ public class PauseMenu : MonoBehaviour
 
     public void BackToHub()
     {
-        //Placeholder for potential return to hub method
+        SceneManager.LoadScene(1);
     }
 
     public void Save()
@@ -70,6 +70,6 @@ public class PauseMenu : MonoBehaviour
     public void MainMenu()
     {
         //Sends player back to the MainMenu
-        SceneManager.LoadScene(2);
+        SceneManager.LoadScene(0);
     }
 }
