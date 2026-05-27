@@ -1,34 +1,65 @@
-using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Video;
+using UnityEngine.UI;
 
 public class LevelTeleport : MonoBehaviour
 {
- 
-    public MeshRenderer sphereMesh;
-    private MeshRenderer teleportCube;
-    [SerializeField] private string sceneName;
+    [Header("Video Settings")]
+    [SerializeField] private VideoPlayer videoPlayer;
+     [SerializeField] private RawImage cutsceneImage;
+    private bool isTransitioning = false;
+    private bool videoFinished = false;
 
     private void Start()
     {
-        teleportCube = GetComponent<MeshRenderer>();
-        teleportCube.enabled = false;
+        cutsceneImage.gameObject.SetActive(false);
+        if (videoPlayer != null)
+        {
+            videoPlayer.playOnAwake = false;
+
+            // Subscribe to video finished event
+            videoPlayer.loopPointReached += OnVideoFinished;
+        }
     }
 
-    private void Update()
+    private void OnDestroy()
     {
-
-        if (sphereMesh.enabled && !teleportCube.enabled)
+        if (videoPlayer != null)
         {
-            teleportCube.enabled = true;
+            videoPlayer.loopPointReached -= OnVideoFinished;
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && (teleportCube.enabled))
+        if (other.CompareTag("Player") && !isTransitioning)
         {
-            SceneManager.LoadScene(sceneName);
+            StartCoroutine(PlayCutsceneThenLoad());
         }
+    }
+
+    private System.Collections.IEnumerator PlayCutsceneThenLoad()
+    {
+        isTransitioning = true;
+        cutsceneImage.gameObject.SetActive(true);
+
+        if (videoPlayer != null)
+        {
+            videoFinished = false;
+
+            videoPlayer.Play();
+            
+
+            // Wait until the video actually finishes
+            yield return new WaitUntil(() => videoFinished);
+        }
+
+        SceneManager.LoadScene(1);
+    }
+
+    private void OnVideoFinished(VideoPlayer vp)
+    {
+        videoFinished = true;
     }
 }
