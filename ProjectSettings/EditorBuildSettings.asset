@@ -4,32 +4,5 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes:
-  - enabled: 1
-<<<<<<< HEAD
-    path: Assets/Scenes/MainMenu.unity
-    guid: 9827f5596c34b9d42abebb910d60ab22
-  - enabled: 1
-    path: Assets/Scenes/HubWorld.unity
-    guid: 99c9720ab356a0642a771bea13969a05
-  - enabled: 1
-    path: Assets/Scenes/Level1.unity
-    guid: b747c5e1a607fc54dbc574cbcc621fa2
-  - enabled: 1
-    path: Assets/Scenes/MB_Testing_Scene.unity
-    guid: acb6a0d331f0be74980f6243c299e45a
-  - enabled: 1
-    path: Assets/Scenes/TestingEnvironment.unity
-    guid: ee7dd504fb29073458c743af08f2ad2e
-  - enabled: 1
-    path: Assets/Scenes/MoldEnemiy.unity
-    guid: f8b2e333c58ad8547a1ae2775d2eb8c6
-=======
-    path: Assets/Scenes/Level1.unity
-    guid: b747c5e1a607fc54dbc574cbcc621fa2
-  - enabled: 1
-    path: Assets/Scenes/Book1_ThroughTheShades,AsTheSingersWeep.unity
-    guid: d3c1a40aaa87f7349a18eca86bf5da08
->>>>>>> 5e937e1164fa0ba02bd1ba85337d933b856a47c6
-  m_configObjects:
-    com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  m_Scenes: []
+  m_configObjects: {}
