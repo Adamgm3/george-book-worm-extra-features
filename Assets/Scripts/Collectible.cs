@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum AbilityType
@@ -15,7 +16,7 @@ public class Collectible : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            WormController worm = other.GetComponent<WormController>();
+            WormController worm = other.GetComponentInParent<WormController>();
             if (worm != null)
             {
                 worm.UnlockAbility(abilityType);

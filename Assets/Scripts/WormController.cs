@@ -32,15 +32,19 @@ public class WormController : MonoBehaviour
     private float dashTimer = 0f;
     private bool usedDash = false;
 
+    public bool isGrounded = false;
     private Rigidbody rb;
-    private bool isGrounded = false;
     private Vector3 currentVelocity;
 
     // Input System
-    private InputSystem_Actions inputActions;
-    private Vector2 moveInput;
+    public InputSystem_Actions inputActions;
+    public Vector2 moveInput;
     private bool jumpHeld = false;
-    private bool jumpReleased = false;
+    public bool jumpReleased = false;
+
+    [Header("Ground Check")]
+    public Transform feetPoint; // Drag your new 'FeetPoint' object here in the Inspector
+    public float groundCheckRadius = 0.2f; // The size of the detection bubble
 
     void Awake()
     {
@@ -181,8 +185,13 @@ public class WormController : MonoBehaviour
 
     void CheckGround()
     {
-        isGrounded = Physics.Raycast(transform.position, Vector3.down, groundCheckDistance + 0.1f, groundLayer);
+        if (feetPoint == null) return;
+
+        // Checks a tiny sphere bubble at the player's feet. 
+        // It doesn't use rays, so it can't get cut off by wall/floor seams!
+        isGrounded = Physics.CheckSphere(feetPoint.position, groundCheckRadius, groundLayer);
     }
+
 
     public void UnlockAbility(AbilityType ability)
     {
@@ -191,4 +200,5 @@ public class WormController : MonoBehaviour
         else if (ability == AbilityType.Dash)
             hasDash = true;
     }
+
 }

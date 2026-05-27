@@ -14,9 +14,9 @@ public class ExitGame : MonoBehaviour
         
     }
 
-    private void OnTriggerEnter(collider other)
+    private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag = ("Player"))
+        if (other.CompareTag("Player"))
         {
             Application.Quit();
         }
