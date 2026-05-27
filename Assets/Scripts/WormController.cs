@@ -149,7 +149,7 @@ public class WormController : MonoBehaviour
         }
 
         // Double jump
-        if (jumpReleased && !isGrounded && isJumping && hasDoubleJump && !usedDoubleJump)
+        if (jumpPressed && !isGrounded && isJumping && hasDoubleJump && !usedDoubleJump)
         {
             rb.linearVelocity = new Vector3(rb.linearVelocity.x, minJumpForce * 1.5f, rb.linearVelocity.z);
             usedDoubleJump = true;
