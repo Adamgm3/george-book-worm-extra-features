@@ -18,6 +18,6 @@ public class CollectibleUI : MonoBehaviour
     public void AddCollectible()
     {
         count++;
-        collectibleText.text = count + " / " + goal;
+        collectibleText.text = "x " + count;
     }
 }

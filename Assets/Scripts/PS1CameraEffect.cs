@@ -26,9 +26,9 @@ public class PS1CameraEffect : MonoBehaviour
             renderTexture.Release();
     }
 
-    void OnGUI()
-    {
-        GUI.depth = -1;
-        GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), renderTexture, ScaleMode.StretchToFill);
-    }
+    //void OnGUI()
+    //{
+    //    GUI.depth = -1;
+    //    GUI.DrawTexture(new Rect(0, 0, Screen.width, Screen.height), renderTexture, ScaleMode.StretchToFill);
+    //}
 }
