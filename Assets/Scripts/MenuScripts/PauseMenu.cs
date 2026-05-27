@@ -70,6 +70,6 @@ public class PauseMenu : MonoBehaviour
     public void MainMenu()
     {
         //Sends player back to the MainMenu
-        SceneManager.LoadScene(0);
+        SceneManager.LoadScene(2);
     }
 }
