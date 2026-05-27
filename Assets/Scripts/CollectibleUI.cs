@@ -18,6 +18,6 @@ public class CollectibleUI : MonoBehaviour
     public void AddCollectible()
     {
         count++;
-        collectibleText.text = "x " + count;
+        collectibleText.text = "<sprite=0>" + "x " + count;
     }
 }
