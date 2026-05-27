@@ -55,7 +55,7 @@ public class LevelTeleport : MonoBehaviour
             yield return new WaitUntil(() => videoFinished);
         }
 
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene(2);
     }
 
     private void OnVideoFinished(VideoPlayer vp)
