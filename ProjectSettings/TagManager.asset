@@ -10,6 +10,7 @@ TagManager:
   - Enemy
   - Collectables
   - CollectableManager
+  - GameManager
   layers:
   - Default
   - TransparentFX
