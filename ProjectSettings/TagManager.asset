@@ -8,6 +8,8 @@ TagManager:
   - Sphere
   - EnemyWeapon
   - Enemy
+  - Collectables
+  - CollectableManager
   layers:
   - Default
   - TransparentFX

@@ -13,7 +13,6 @@ public class PlayerHealth : MonoBehaviour
 
     public void Update()
     {
-        Debug.Log("Player health: " + health);
         if (health <= 0)
         {
             Debug.Log("Player died! Restarting scene...");
