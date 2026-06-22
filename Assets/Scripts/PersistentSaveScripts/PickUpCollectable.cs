@@ -22,7 +22,7 @@ public class PickUpCollectable : MonoBehaviour
             Debug.Log($"Destroying {collectibleID}");
             Destroy(gameObject);
         }
-        manager = GameObject.FindGameObjectWithTag("CollectableManager").GetComponent<CollectableManager>();
+        manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<CollectableManager>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -40,7 +40,7 @@ public class PickUpCollectable : MonoBehaviour
             SaveSystem.Instance.saveData.collectedIDs.Add(collectibleID);
         }
         SaveSystem.Instance.SaveGame();
-        Debug.Log(SaveSystem.Instance.saveData.collectedIDs);
+        manager.Add(1);
         Destroy(gameObject);
     }
     [ContextMenu("Generate New GUID")]
