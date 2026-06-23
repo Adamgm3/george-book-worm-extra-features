@@ -47,12 +47,13 @@ public class LevelTeleport : MonoBehaviour
         if (videoPlayer != null)
         {
             videoFinished = false;
-
             videoPlayer.Play();
-            
 
-            // Wait until the video actually finishes
-            yield return new WaitUntil(() => videoFinished);
+            // Wait until the video finishes or the player presses E to skip
+            while (!videoFinished && !Input.GetKeyDown(KeyCode.E))
+                yield return null;
+
+            videoPlayer.Stop();
         }
 
         SceneManager.LoadScene(2);
