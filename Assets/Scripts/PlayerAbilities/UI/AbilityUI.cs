@@ -1,38 +1,41 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class AbilityUI : MonoBehaviour
+public class AbillityUI : MonoBehaviour
 {
     public PlayerAbilities player;
     public AbilitySlotUI slotPrefab;
     public Transform contentParent;
 
-    private AbilitySlotUI[] slots;
+    private Dictionary<AbilityType, AbilitySlotUI> slots = new();
 
     private void Start()
     {
-        CreateUI();
+        BuildUI();
+
+        // listen for ability unlocks
+        player.OnAbilityUnlocked += HandleAbilityUnlocked;
     }
 
-    void CreateUI()
+    private void BuildUI()
     {
-        AbilityType[] abilities = (AbilityType[])System.Enum.GetValues(typeof(AbilityType));
+        AbilityType[] abilities =
+            (AbilityType[])System.Enum.GetValues(typeof(AbilityType));
 
-        slots = new AbilitySlotUI[abilities.Length];
-
-        for (int i = 0; i < abilities.Length; i++)
+        foreach (AbilityType ability in abilities)
         {
-            AbilitySlotUI slot = Instantiate(slotPrefab, contentParent);
+            AbilitySlotUI slot =
+                Instantiate(slotPrefab, contentParent);
 
-            slot.abilityType = abilities[i];
-            slot.Init(player);
+            slot.Init(player, ability);
 
-            slots[i] = slot;
+            slots.Add(ability, slot);
         }
     }
 
-    private void Update()
+    private void HandleAbilityUnlocked(AbilityType ability)
     {
-        foreach (var slot in slots)
+        if (slots.TryGetValue(ability, out AbilitySlotUI slot))
         {
             slot.Refresh();
         }

@@ -41,6 +41,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7554997160504036350}
   - component: {fileID: 7524126710095094277}
+  - component: {fileID: -4404074877972243257}
   - component: {fileID: 8441341386050337893}
   - component: {fileID: 3636343426120372007}
   m_Layer: 0
@@ -93,6 +94,18 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &-4404074877972243257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2539097306745096882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 094a3368fdcfb2c498f36a65d8117c27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerAbilities
 --- !u!114 &8441341386050337893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,7 +362,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a684e29aed70074781aa1f32e761d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeapon
-  enemy: {fileID: 0}
   inputActions: {fileID: 0}
   damage: 1
 --- !u!1001 &1982112386990302892

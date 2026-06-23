@@ -7,7 +7,7 @@ public class SaveSystem : MonoBehaviour
     public static SaveSystem Instance;
 
     public Save saveData = new Save();
-
+    public PlayerAbilities playerAbilities;
     private string savePath;
 
     private void Awake()

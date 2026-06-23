@@ -17,8 +17,12 @@ public class Collectible : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             WormController worm = other.GetComponentInParent<WormController>();
+
+            PlayerAbilities player =
+                other.GetComponentInParent<PlayerAbilities>();
             if (worm != null)
             {
+                player.UnlockAbility(abilityType);
                 worm.UnlockAbility(abilityType);
                 Destroy(gameObject);
             }

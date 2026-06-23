@@ -1,29 +1,29 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class AbilitySlotUI : MonoBehaviour
 {
-    public AbilityType abilityType;
-
     public TextMeshProUGUI nameText;
     public Image iconImage;
     public Image lockedOverlay;
 
-    private PlayerAbilities playerAbilities;
+    private PlayerAbilities player;
+    private AbilityType ability;
 
-    public void Init(PlayerAbilities player)
+    public void Init(PlayerAbilities player, AbilityType ability)
     {
-        playerAbilities = player;
+        this.player = player;
+        this.ability = ability;
 
-        nameText.text = abilityType.ToString();
+        nameText.text = ability.ToString();
 
         Refresh();
     }
 
     public void Refresh()
     {
-        bool unlocked = playerAbilities.Has(abilityType);
+        bool unlocked = player.HasAbility(ability);
 
         lockedOverlay.enabled = !unlocked;
         iconImage.color = unlocked ? Color.white : Color.grey;
