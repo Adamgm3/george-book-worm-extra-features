@@ -25,9 +25,12 @@ public class PlayerAbilities : MonoBehaviour
     }
     public void SaveTo(Save data)
     {
+        Debug.Log("Saving Abilities" + data);
         data.unlockedAbilities.Clear();
         foreach (var ability in unlockedAbilities)
         {
+
+            Debug.Log(ability);
             data.unlockedAbilities.Add(ability.ToString());
         }
     }

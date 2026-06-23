@@ -20,6 +20,7 @@ public class SaveSystem : MonoBehaviour
             savePath = Application.persistentDataPath + "/save.txt";
 
             LoadGame();
+            ApplyLoadedData();
         }
         else
         {
@@ -30,6 +31,8 @@ public class SaveSystem : MonoBehaviour
 
     public void SaveGame()
     {
+        if (playerAbilities != null)
+            playerAbilities.SaveTo(saveData);
         string json = JsonUtility.ToJson(saveData, true);
 
         File.WriteAllText(savePath, json);
@@ -42,6 +45,7 @@ public class SaveSystem : MonoBehaviour
         if (!File.Exists(savePath))
         {
             saveData = new Save();
+            Debug.Log("No save file found - creating new one");
             return;
         }
 
@@ -50,5 +54,15 @@ public class SaveSystem : MonoBehaviour
         saveData = JsonUtility.FromJson<Save>(json);
 
         Debug.Log("Loaded save file");
+    }
+
+    // =========================
+    // APPLY DATA INTO GAME
+    // =========================
+    public void ApplyLoadedData()
+    {
+        if (playerAbilities != null)
+            playerAbilities.LoadFrom(saveData);
+
     }
 }

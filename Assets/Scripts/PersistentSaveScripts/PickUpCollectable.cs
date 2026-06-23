@@ -15,11 +15,9 @@ public class PickUpCollectable : MonoBehaviour
     }
     private void Start()
     {
-        Debug.Log($"Checking {collectibleID}");
 
         if (SaveSystem.Instance.saveData.collectedIDs.Contains(collectibleID))
         {
-            Debug.Log($"Destroying {collectibleID}");
             Destroy(gameObject);
         }
         manager = GameObject.FindGameObjectWithTag("GameManager").GetComponent<CollectableManager>();
