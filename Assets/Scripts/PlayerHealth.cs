@@ -9,7 +9,12 @@ public class PlayerHealth : MonoBehaviour
     public int damage = 1;
     [SerializeField] EnemyMovement enemy;
     public string scene = "2";
+    public WormController controller;
 
+    private void Start()
+    {
+        controller = GetComponentInParent<WormController>();
+    }
 
     public void Update()
     {
