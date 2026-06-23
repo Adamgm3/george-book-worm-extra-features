@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -47,6 +48,14 @@ public class WormController : MonoBehaviour
     [Header("Ground Check")]
     public Transform feetPoint; // Drag your new 'FeetPoint' object here in the Inspector
     public float groundCheckRadius = 0.2f; // The size of the detection bubble
+
+    [Header("Damage Flash")]
+    [SerializeField] public Material wyrmTexture;
+    [SerializeField] public Material damageMaterial;
+    [SerializeField] public float flashDuration;
+
+    [SerializeField] private Renderer wyrmMesh;
+    private Coroutine flashCoroutine;
 
     void Awake()
     {
@@ -212,4 +221,23 @@ public class WormController : MonoBehaviour
             hasDash = true;
     }
 
+    public void DamageFlash()
+    {
+        if (flashCoroutine != null) StopCoroutine(flashCoroutine);
+        StartCoroutine(nameof(FlashRoutine));
+    }
+
+    // The following method was assisted by Claude
+    private IEnumerator FlashRoutine()
+    {
+        var mats = wyrmMesh.materials;
+        mats[0] = damageMaterial;
+        wyrmMesh.materials = mats;
+
+        yield return new WaitForSeconds(flashDuration);
+
+        mats = wyrmMesh.materials;
+        mats[0] = wyrmTexture;
+        wyrmMesh.materials = mats;
+    }
 }

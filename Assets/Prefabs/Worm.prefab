@@ -125,6 +125,10 @@ MonoBehaviour:
   jumpReleased: 0
   feetPoint: {fileID: 6295204769327815673}
   groundCheckRadius: 0.2
+  wyrmTexture: {fileID: 2100000, guid: 730013a4f358b7749a1428f7da9adfa4, type: 2}
+  damageMaterial: {fileID: 2100000, guid: 7302d9f59cd318c4891841a4b0b6e3ba, type: 2}
+  flashDuration: 0.3
+  wyrmMesh: {fileID: 7042399217689685089}
 --- !u!114 &3636343426120372007
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,7 +353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a684e29aed70074781aa1f32e761d47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWeapon
-  enemy: {fileID: 0}
   inputActions: {fileID: 0}
   damage: 1
 --- !u!1001 &1982112386990302892
@@ -647,6 +650,11 @@ Transform:
 --- !u!95 &5398537354886896445 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: de21377b8ed5d1440a949201fb742f5a, type: 3}
+  m_PrefabInstance: {fileID: 1982112386990302892}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &7042399217689685089 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -415949164127155507, guid: de21377b8ed5d1440a949201fb742f5a, type: 3}
   m_PrefabInstance: {fileID: 1982112386990302892}
   m_PrefabAsset: {fileID: 0}
 --- !u!4 &7560067912763705333 stripped

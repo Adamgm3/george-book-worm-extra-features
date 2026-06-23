@@ -28,6 +28,7 @@ public class EnemyWeapon : MonoBehaviour
 
         // Attack
         player.health -= damage;
+        player.controller.DamageFlash();
         Debug.Log("Player hit! Remaining Player health: " + player.health);
 
         // Save attack time
