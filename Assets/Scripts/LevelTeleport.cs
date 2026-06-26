@@ -39,6 +39,7 @@ public class LevelTeleport : MonoBehaviour
         }
     }
 
+    // Claude was used to assist in writing this method
     private System.Collections.IEnumerator PlayCutsceneThenLoad()
     {
         isTransitioning = true;
